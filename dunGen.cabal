@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 97aa5de2fe646af6b7de8959e33df341edd33f606c11e2b3df4c0637b4eac512
+-- hash: 18574e28c4c7e7e2982ea5e0042badb161564a6114563d40d901643a146ffb0d
 
 name:           dunGen
 version:        0.1.0.0
@@ -19,7 +19,6 @@ license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
     README.md
-    ChangeLog.md
 
 source-repository head
   type: git
@@ -33,10 +32,11 @@ library
       Paths_dunGen
   hs-source-dirs:
       src
-  ghc-options: -XTypeOperators
+  ghc-options: XTypeOperators
   build-depends:
       JuicyPixels
     , base >=4.7 && <5
+    , liquidhaskell
     , random
     , type-operators
   default-language: Haskell2010
@@ -52,6 +52,7 @@ executable dunGen-exe
       JuicyPixels
     , base >=4.7 && <5
     , dunGen
+    , liquidhaskell
     , random
     , type-operators
   default-language: Haskell2010
@@ -68,6 +69,7 @@ test-suite dunGen-test
       JuicyPixels
     , base >=4.7 && <5
     , dunGen
+    , liquidhaskell
     , random
     , type-operators
   default-language: Haskell2010
