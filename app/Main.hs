@@ -2,7 +2,8 @@ module Main where
 
 import System.Environment
 import System.Directory
-import Control.Monad.Extra
+import System.IO
+import Control.Monad
 import Data.List
 import Data.Char
 
@@ -15,14 +16,36 @@ data Env = Env {getDunParams :: (Int, Int, Int),
 strip p = dropWhile p . dropWhileEnd p
 stripSpace = strip isSpace
 
+-- Single line write doesn't necessarily trigger a flush so we need to do that
+-- automatically for the prompt to show
+prompt:: String -> IO String
+prompt str = do
+  putStr str
+  hFlush stdout
+  stripSpace <$> getLine
+
+-- TODO: make fault tolerant with readMaybe
+promptRead :: Read a => String -> IO a
+promptRead str = do
+  putStr str
+  hFlush stdout
+  readLn
+
+promptYN str = do
+  putStr str
+  hFlush stdout
+  inp <- stripSpace <$> getLine
+  case toUpper <$> inp of
+    "Y" -> return True
+    "N" -> return False
+    _   -> putStrLn "Bad input; please respond with \"y\" or \"n\"."
+           >> promptYN str
+
 cmdLineDun:: IO Env
 cmdLineDun = do
-  putStrLn "Grid width: "
-  x <- readLn
-  putStrLn "Grid height: "
-  y <- readLn
-  putStrLn "Grid density: "
-  gas <- readLn
+  x   <- promptRead "Grid width: "
+  y   <- promptRead "Grid height: "
+  gas <- promptRead "Grid density: "
   putStrLn "Generating..."
   dun <- dunGen gas x y
   putStrLn "Done."
@@ -32,8 +55,9 @@ cmdLineDun = do
 menu :: Env -> IO ()
 menu env = printMenu >> readLn >>= doSel
  where
-  printMenu = putStrLn $ unlines
-    ["1. Preview in terminal",
+  printMenu = putStr $ unlines
+    ["",
+     "1. Preview in terminal",
      "2. Render image",
      "3. Regenerate with same parameters",
      "4. Regererate with new parameters",
@@ -42,15 +66,15 @@ menu env = printMenu >> readLn >>= doSel
 
   doSel 1 = cmdLineRender (getDun env) >> menu env
   doSel 2 = do
-    putStrLn "Filename: "
+    putStr "Filename: "
     file   <- stripSpace <$> getLine
     exists <- doesFileExist file
     when exists $ do
-      putStrLn $ file ++ " already exists. Overwrite it? (y/n)"
-      yes <- getYN
+      yes <- promptYN $ file ++ " already exists. Overwrite it? (y/n): "
       when (not yes) $ menu env
+    putStrLn "Rendering..."
     err <- genImage file (getDun env)
-    whenJust err $ putStrLn . ("Error: " ++)
+    putStrLn $ maybe "Done." ("Error: " ++) err
     menu env
   doSel 3 = do
     putStrLn "Generating..."
@@ -62,15 +86,5 @@ menu env = printMenu >> readLn >>= doSel
   doSel 5 = return ()
   doSel _ = putStrLn "Bad input; please respond with a number 1-5."
             >> menu env
-
-  getYN :: IO Bool
-  getYN = do
-    str <- stripSpace <$> getLine
-    let strUpper = toUpper <$> str
-    case str of
-      "Y" -> return True
-      "N" -> return False
-      _   -> putStrLn "Bad input; please respond with \"y\" or \"n\"."
-             >> getYN
-
+  
 main = cmdLineDun >>= menu

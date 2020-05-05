@@ -25,7 +25,6 @@ dependencies:
 - random
 - matrix
 - bytestring
-- extra
 - directory
 
 library:

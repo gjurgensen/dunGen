@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 0e587ca2947002d7c1abfdcd1c5ff53947c4672d5515229defb1915d48130fda
+-- hash: f9d8671eabfe1a22ed1b43e06395d4902600656ed0b940da123d812c057b671c
 
 name:           dunGen
 version:        0.1.0.0
@@ -38,7 +38,6 @@ library
     , base >=4.7 && <5
     , bytestring
     , directory
-    , extra
     , matrix
     , random
     , type-operators
@@ -57,7 +56,6 @@ executable dunGen-exe
     , bytestring
     , directory
     , dunGen
-    , extra
     , matrix
     , random
     , type-operators
@@ -77,7 +75,6 @@ test-suite dunGen-test
     , bytestring
     , directory
     , dunGen
-    , extra
     , matrix
     , random
     , type-operators
