@@ -23,12 +23,12 @@ dependencies:
 - JuicyPixels
 - type-operators
 - random
-- liquidhaskell
+- matrix
+- bytestring
 
 library:
   source-dirs: src
-  ghc-options:
-  - XTypeOperators
+  ghc-options: -XTypeOperators
 
 executables:
   dunGen-exe:

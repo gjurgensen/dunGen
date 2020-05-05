@@ -4,11 +4,11 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 18574e28c4c7e7e2982ea5e0042badb161564a6114563d40d901643a146ffb0d
+-- hash: bcce7d4694166747132c8112c97d386919293db684b41e7a545dabe2a7a8a799
 
 name:           dunGen
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/dunGen#readme>
+description:    Please see the README on GitHub at <https://github.com/gaj7/dunGen#readme>
 homepage:       https://github.com/gaj7/dunGen#readme
 bug-reports:    https://github.com/gaj7/dunGen/issues
 author:         Grant Jurgensen
@@ -26,17 +26,18 @@ source-repository head
 
 library
   exposed-modules:
-      Map
-      Matrix
+      Dungeon
+      Image
   other-modules:
       Paths_dunGen
   hs-source-dirs:
       src
-  ghc-options: XTypeOperators
+  ghc-options: -XTypeOperators
   build-depends:
       JuicyPixels
     , base >=4.7 && <5
-    , liquidhaskell
+    , bytestring
+    , matrix
     , random
     , type-operators
   default-language: Haskell2010
@@ -51,8 +52,9 @@ executable dunGen-exe
   build-depends:
       JuicyPixels
     , base >=4.7 && <5
+    , bytestring
     , dunGen
-    , liquidhaskell
+    , matrix
     , random
     , type-operators
   default-language: Haskell2010
@@ -68,8 +70,9 @@ test-suite dunGen-test
   build-depends:
       JuicyPixels
     , base >=4.7 && <5
+    , bytestring
     , dunGen
-    , liquidhaskell
+    , matrix
     , random
     , type-operators
   default-language: Haskell2010
