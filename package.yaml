@@ -25,6 +25,8 @@ dependencies:
 - random
 - matrix
 - bytestring
+- extra
+- directory
 
 library:
   source-dirs: src

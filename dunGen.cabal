@@ -4,11 +4,11 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: bcce7d4694166747132c8112c97d386919293db684b41e7a545dabe2a7a8a799
+-- hash: 0e587ca2947002d7c1abfdcd1c5ff53947c4672d5515229defb1915d48130fda
 
 name:           dunGen
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/gaj7/dunGen#readme>
+description:    Please see the README on GitHub at <https://github.com/githubuser/dunGen#readme>
 homepage:       https://github.com/gaj7/dunGen#readme
 bug-reports:    https://github.com/gaj7/dunGen/issues
 author:         Grant Jurgensen
@@ -37,6 +37,8 @@ library
       JuicyPixels
     , base >=4.7 && <5
     , bytestring
+    , directory
+    , extra
     , matrix
     , random
     , type-operators
@@ -53,7 +55,9 @@ executable dunGen-exe
       JuicyPixels
     , base >=4.7 && <5
     , bytestring
+    , directory
     , dunGen
+    , extra
     , matrix
     , random
     , type-operators
@@ -71,7 +75,9 @@ test-suite dunGen-test
       JuicyPixels
     , base >=4.7 && <5
     , bytestring
+    , directory
     , dunGen
+    , extra
     , matrix
     , random
     , type-operators

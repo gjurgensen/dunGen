@@ -23,8 +23,8 @@ x `inRange` (min, max) = x >= min && x <= max
 
 mx `orElse` y = maybe y id mx
 
-cmdlineRender :: Dungeon -> IO ()
-cmdlineRender = putStrLn . unlines
+cmdLineRender :: Dungeon -> IO ()
+cmdLineRender = putStrLn . unlines
               . fmap (unwords . (fmap $ dunTile " " "#" "x")) . toLists
 
 dunGen :: Int -> Int -> Int -> IO Dungeon
