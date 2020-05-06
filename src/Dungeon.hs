@@ -21,7 +21,7 @@ type Dungeon = Matrix DunTile
 
 cmdLineRender :: Dungeon -> IO ()
 cmdLineRender = putStrLn . unlines
-              . fmap (unwords . (fmap $ dunTile " " "#" "x")) . toLists
+              . fmap (unwords . (fmap $ dunTile "." "#" "x")) . toLists
 
 dunGen :: Int -> Int -> Int -> IO Dungeon
 dunGen gas sizeX sizeY = go gas $ matrix sizeY sizeX $ const Wall
@@ -47,10 +47,11 @@ dunGen gas sizeX sizeY = go gas $ matrix sizeY sizeX $ const Wall
       roomX <- randomRIO (0, sizeX - roomSizeX)
       roomY <- randomRIO (0, sizeY - roomSizeY)
       return $ matrix sizeY sizeX $ \p ->
-        if p `inRect`
+        let coord = fromMatCoord p in
+        if coord `inRect`
           ((roomX, roomY), (roomX + roomSizeX -1, roomY + roomSizeY -1))
         then Just Room else
-        if p `inRect`
+        if coord `inRect`
           ((roomX -1, roomY -1), (roomX + roomSizeX, roomY + roomSizeY))
         then Just Wall else
         Nothing

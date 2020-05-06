@@ -9,6 +9,7 @@ import qualified Data.ByteString      as BS
 import qualified Data.Vector.Storable as VS
 
 import Dungeon
+import Misc
 
 type Bitmap = Image PixelRGBA8
 
@@ -19,9 +20,10 @@ flattenGrid g
     | otherwise    = generateImage getPixel ((ncols g) * tileX) ((nrows g) * tileY)
   where
     emptyImage = Image 0 0 VS.empty
-    tileX = imageWidth  $ g ! (1,1)
-    tileY = imageHeight $ g ! (1,1)
-    getPixel x y = pixelAt (g ! (gx +1, gy +1)) px py
+    firstTile = adjGetElem g 0 0
+    tileX = imageWidth  $ firstTile
+    tileY = imageHeight $ firstTile
+    getPixel x y = pixelAt (adjGetElem g gx gy) px py
       where
         (gx,px) = x `divMod` tileX
         (gy,py) = y `divMod` tileY
