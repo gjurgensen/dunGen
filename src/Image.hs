@@ -5,7 +5,8 @@ import Codec.Picture.Bitmap
 import Control.Monad
 import Control.Type.Operator
 import Data.Matrix
-import Data.ByteString as BS
+import qualified Data.ByteString      as BS
+import qualified Data.Vector.Storable as VS
 
 import Dungeon
 
@@ -17,7 +18,7 @@ flattenGrid g
     | nrows g == 0 = emptyImage
     | otherwise    = generateImage getPixel ((ncols g) * tileX) ((nrows g) * tileY)
   where
-    emptyImage = generateImage undefined 0 0
+    emptyImage = Image 0 0 VS.empty
     tileX = imageWidth  $ g ! (1,1)
     tileY = imageHeight $ g ! (1,1)
     getPixel x y = pixelAt (g ! (gx +1, gy +1)) px py

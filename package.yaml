@@ -26,6 +26,7 @@ dependencies:
 - matrix
 - bytestring
 - directory
+- vector
 
 library:
   source-dirs: src
