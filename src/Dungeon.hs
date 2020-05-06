@@ -30,12 +30,13 @@ dunGen gas sizeX sizeY = go gas $ matrix sizeY sizeX $ const Wall
     sizeMax = 10
 
     go :: Int -> Dungeon -> IO Dungeon
-    go 0 dun = return dun
-    go n dun = do
-      room <- genRoom
-      if or $ elementwise collision room dun
-        then go (n-1) dun
-        else go gas $ combine room dun
+    go n dun
+      | n <= 0   = return dun
+      | otherwise = do
+          room <- genRoom
+          if or $ elementwise collision room dun
+            then go (n-1) dun
+            else go gas $ combine room dun
       where
         collision mx y = isJust mx && y == Room
         combine = elementwise orElse
