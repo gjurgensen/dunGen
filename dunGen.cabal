@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.31.2.
+-- This file has been generated from package.yaml by hpack version 0.33.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f9d8671eabfe1a22ed1b43e06395d4902600656ed0b940da123d812c057b671c
+-- hash: 1241da3e4b41cf6c0be3363b102f7f1777a6301fd7dc77c5292bbabb55834a10
 
 name:           dunGen
 version:        0.1.0.0
@@ -26,8 +26,10 @@ source-repository head
 
 library
   exposed-modules:
+      CommandLine
       Dungeon
       Image
+      Misc
   other-modules:
       Paths_dunGen
   hs-source-dirs:

@@ -5,6 +5,8 @@ import Control.Type.Operator
 import Data.Matrix
 import Data.Maybe
 
+import Misc
+
 data DunTile = Wall | Room | Hall
   deriving Eq
 
@@ -16,12 +18,6 @@ dunTile a b c = go
 
 type Dungeon = Matrix DunTile
 
--- *inclusive* range check
-x `inRange` (min, max) = x >= min && x <= max
-(x, y) `inRect` ((minX, minY), (maxX, maxY)) = x `inRange` (minX, maxX)
-                                            && y `inRange` (minY, maxY)
-
-mx `orElse` y = maybe y id mx
 
 cmdLineRender :: Dungeon -> IO ()
 cmdLineRender = putStrLn . unlines
