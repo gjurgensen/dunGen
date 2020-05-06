@@ -4,11 +4,11 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 22c3b8b13f9af2da20f68f9a01b1aa2b1d6154d3361e1e90cd8dd8c1271e4529
+-- hash: 7c768f6df7f6e6f3d3dad8ae78a82ae87aa381705628bb960eef61305932ce2d
 
 name:           dunGen
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/dunGen#readme>
+description:    Please see the README on GitHub at <https://github.com/gaj7/dunGen#readme>
 homepage:       https://github.com/gaj7/dunGen#readme
 bug-reports:    https://github.com/gaj7/dunGen/issues
 author:         Grant Jurgensen
