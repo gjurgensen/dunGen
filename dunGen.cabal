@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7c768f6df7f6e6f3d3dad8ae78a82ae87aa381705628bb960eef61305932ce2d
+-- hash: c46fb0802ba447ea45cbf7a56323810ec62452f0755115331429187b7c80d834
 
 name:           dunGen
 version:        0.1.0.0
@@ -34,7 +34,7 @@ library
       Paths_dunGen
   hs-source-dirs:
       src
-  ghc-options: -XTypeOperators
+  ghc-options: -XTypeOperators -XFlexibleContexts
   build-depends:
       JuicyPixels
     , base >=4.7 && <5

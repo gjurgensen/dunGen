@@ -30,7 +30,9 @@ dependencies:
 
 library:
   source-dirs: src
-  ghc-options: -XTypeOperators
+  ghc-options: 
+  - -XTypeOperators
+  - -XFlexibleContexts
 
 executables:
   dunGen-exe:

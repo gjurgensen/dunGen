@@ -1,5 +1,6 @@
 module Main where
 
+import Codec.Picture.Types
 import System.Directory
 import Control.Monad
 
@@ -42,9 +43,10 @@ dunMenu = menu [("Preview in terminal", preview),
           when yes $ renderTo file
       return env
         where
+          gridPx = Just $ PixelRGBA8 0 0 0 64
           renderTo file = do
             putStrLn "Rendering..."
-            err <- genImage file (getDun env)
+            err <- genImage file gridPx (getDun env)
             putStrLn $ maybe "Done." ("Error: " ++) err
 
     regenSame env = do
