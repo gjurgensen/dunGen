@@ -44,12 +44,49 @@ rotCounter   = dir L U R D
 type Worm = (Int, Coord, Dir)
 
 dunGen :: Int -> Int -> Int -> IO Dungeon
-dunGen gas sizeX sizeY = 
-  let center = ((sizeX -1) `div` 2, (sizeY -1) `div` 2) in
-  tunnel [(gas, center, U), (gas, center, R),
-          (gas, center, D), (gas, center, L)]
-       $ matrix sizeY sizeX $ const Wall
+dunGen gas sizeX sizeY = do
+  let center = ((sizeX -1) `div` 2, (sizeY -1) `div` 2)
+  let initWorms = [(gas, center, U), (gas, center, R),
+                   (gas, center, D), (gas, center, L)]
+  tunneled <- tunnel initWorms $ matrix sizeY sizeX $ const Wall
+  placeRooms gas tunneled
   where
+    sizeMin = 3
+    sizeMax = 10
+
+    placeRooms :: Int -> Dungeon -> IO Dungeon
+    placeRooms n dun
+      | n <= 0    = return dun
+      | otherwise = do
+          room <- genRoom
+          if or  (elementwise collision    room dun) ||
+             and (elementwise disconnected room dun)
+          then placeRooms (n-1) dun
+          else placeRooms n $ combine room dun
+      where
+        collision    ma b = isJust ma && b == Room
+        disconnected ma b = case (ma, b) of
+          (Just Room, Hall) -> False
+          _ -> True
+        combine = elementwise $ \ma b -> case ma of 
+          Just Room -> Room
+          _ -> b
+
+    genRoom = do
+      roomSizeX <- randomRIO (sizeMin, sizeMax)
+      roomSizeY <- randomRIO (sizeMin, sizeMax)
+      roomX <- randomRIO (0, sizeX - roomSizeX)
+      roomY <- randomRIO (0, sizeY - roomSizeY)
+      return $ matrix sizeY sizeX $ \p ->
+        let coord = fromMatCoord p in
+        if coord `inRect`
+          ((roomX, roomY), (roomX + roomSizeX -1, roomY + roomSizeY -1))
+        then Just Room else
+        if coord `inRect`
+          ((roomX -1, roomY -1), (roomX + roomSizeX, roomY + roomSizeY))
+        then Just Wall else
+        Nothing
+
     tunnel :: [Worm] -> Dungeon -> IO Dungeon
     tunnel []    dun = return dun
     tunnel worms dun = do
